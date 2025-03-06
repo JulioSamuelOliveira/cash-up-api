@@ -26,5 +26,12 @@ public class Category {
         return icon;
     }
 
-    
+    public void setId(Long id) { //PARA NÃO ALTERAR O ID QUANDO UMA CATEGORIA FOR ALTERADA
+        this.id = id;
+    }
+
+    @Override // TODA VEZ QUE CHAMAR UMA CATEGORIA ELE VAI APARECER DESSA FORMA
+    public String toString() {
+        return id + " - " + name + " - " + icon;
+    }
 }
