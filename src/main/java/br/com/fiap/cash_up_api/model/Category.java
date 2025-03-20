@@ -1,18 +1,17 @@
 package br.com.fiap.cash_up_api.model;
 
-import java.util.Random;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity //comunica com o jpa
 
 public class Category {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //Id seja a chave primária || O banco de dados que gera o id
     private Long id;
     private String name;
     private String icon;
-
-    //construtores
-    public Category(Long id, String name, String icon) {
-        this.id = Math.abs(new Random().nextLong());
-        this.name = name;
-        this.icon = icon;
-    }
 
     public Long getId() {
         return id;
