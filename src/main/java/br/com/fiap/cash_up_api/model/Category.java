@@ -4,33 +4,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import lombok.Data;
 
-@Entity //comunica com o jpa
-
+@Entity
+@Data
 public class Category {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //Id seja a chave primária || O banco de dados que gera o id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "campo obrigatório")
     private String name;
+
+    @NotBlank(message = "campo obrigatório")
+    @Pattern(regexp = "^[A-Z].*", message = "deve começar com maiúscula")
     private String icon;
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setId(Long id) { //PARA NÃO ALTERAR O ID QUANDO UMA CATEGORIA FOR ALTERADA
-        this.id = id;
-    }
-
-    @Override // TODA VEZ QUE CHAMAR UMA CATEGORIA ELE VAI APARECER DESSA FORMA
-    public String toString() {
-        return id + " - " + name + " - " + icon;
-    }
 }
