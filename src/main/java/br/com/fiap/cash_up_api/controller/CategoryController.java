@@ -2,8 +2,6 @@ package br.com.fiap.cash_up_api.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,18 +22,18 @@ import br.com.fiap.cash_up_api.repository.CategoryRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/categories")
+@Slf4j
 public class CategoryController {
-
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private CategoryRepository repository;
 
     @GetMapping
-    @Cacheable("categories") //colocar todas as categorias em um cache, salvando elas
+    @Cacheable("categories") // salva as  categorias e as infos no cache
     @Operation(description = "Listar todas as categorias", tags = "categories", summary = "Lista de categorias")
     public List<Category> index() {
         log.info("Buscando todas categorias");
@@ -43,10 +41,10 @@ public class CategoryController {
     }
 
     @PostMapping
-    @CacheEvict(value = "categories", allEntries = true) //fazer a alteração no cache
+    @CacheEvict(value = "categories", allEntries = true) //faz a alteração das categorias
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(responses ={
-     @ApiResponse(responseCode = "400", description = "Falha na validação")
+    @Operation(responses = {
+            @ApiResponse(responseCode = "400", description = "Falha na validação")
     })
     public Category create(@RequestBody @Valid Category category) {
         log.info("Cadastrando categoria " + category.getName());

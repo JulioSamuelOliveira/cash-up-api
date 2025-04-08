@@ -11,7 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity //faz com que seja salvo no banco de dados como uma tabela
 @Data
 @Builder
 @NoArgsConstructor
