@@ -1,10 +1,11 @@
 package br.com.fiap.cash_up_api.repository;
  
  import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+import br.com.fiap.cash_up_api.model.Transaction;
  
- import br.com.fiap.cash_up_api.model.Transaction;
- 
- public interface TransactionRepository extends JpaRepository<Transaction, Long>{
+ public interface TransactionRepository extends JpaRepository<Transaction, Long>, JpaSpecificationExecutor<Transaction>{
  
      //List<Transaction> findByDescriptionContainingIgnoringCase(String description); // Query Methods
  
