@@ -1,5 +1,12 @@
 package br.com.fiap.cash_up_api.model;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,22 +30,33 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+public class User implements UserDetails {
 
-public class User {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Email(message = "email invalido")
+    @Email(message = "email inválido")
     @NotBlank(message = "campo obrigatório")
     @Column(unique = true)
     private String email;
 
-    @NotBlank(message = "campo obrigatório")
+    @NotBlank(message = "campo obrigartório")
     @Size(min = 5)
     private String password;
-    
+
     @NotNull(message = "campo obrigatório")
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.toString()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
 }
